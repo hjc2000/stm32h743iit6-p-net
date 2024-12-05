@@ -6,7 +6,7 @@ include(target_import_lwip)
 # include(target_import_stm32h743iit6_hal)
 # include(target_import_task)
 
-set(ProjectName p-net-stm32h743iit6)
+set(ProjectName stm32h743iit6-p-net)
 project(${ProjectName})
 enable_language(ASM)
 set(CMAKE_CXX_STANDARD 20)
