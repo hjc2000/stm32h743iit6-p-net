@@ -30,13 +30,12 @@ extern "C"
 {
 #endif
 
+#include <options.h>
+#include <pnal_sys.h>
+#include <pnet_api.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-
-#include "options.h"
-#include "pnal_sys.h"
-#include "pnet_api.h"
 
 #define PNAL_MAKEU32(a, b, c, d)                                       \
     (((uint32_t)((a) & 0xff) << 24) | ((uint32_t)((b) & 0xff) << 16) | \
@@ -221,12 +220,11 @@ extern "C"
      * @return  0  if the operation succeeded.
      *          -1 if not found or an error occurred.
      */
-    int pnal_load_file(
-        char const *fullpath,
-        void *object_1,
-        size_t size_1,
-        void *object_2,
-        size_t size_2);
+    int pnal_load_file(char const *fullpath,
+                       void *object_1,
+                       size_t size_1,
+                       void *object_2,
+                       size_t size_2);
 
     /**
      * Save a binary file.
@@ -241,12 +239,11 @@ extern "C"
      * @return  0  if the operation succeeded.
      *          -1 if an error occurred.
      */
-    int pnal_save_file(
-        char const *fullpath,
-        void const *object_1,
-        size_t size_1,
-        void const *object_2,
-        size_t size_2);
+    int pnal_save_file(char const *fullpath,
+                       void const *object_1,
+                       size_t size_1,
+                       void const *object_2,
+                       size_t size_2);
 
     /**
      * Clear a binary file.
@@ -296,10 +293,9 @@ extern "C"
      * @return  0  If the frame was NOT handled by this function.
      *          1  If the frame was handled and the buffer freed.
      */
-    typedef int(pnal_eth_callback_t)(
-        pnal_eth_handle_t *eth_handle,
-        void *arg,
-        pnal_buf_t *p_buf);
+    typedef int(pnal_eth_callback_t)(pnal_eth_handle_t *eth_handle,
+                                     void *arg,
+                                     pnal_buf_t *p_buf);
 
     /**
      * Get status of Ethernet link on specified port
@@ -309,9 +305,8 @@ extern "C"
      * @return  0 if the operation succeeded.
      *         -1 if an error occurred.
      */
-    int pnal_eth_get_status(
-        char const *interface_name,
-        pnal_eth_status_t *status);
+    int pnal_eth_get_status(char const *interface_name,
+                            pnal_eth_status_t *status);
 
     /**
      * Get network interface index
@@ -338,9 +333,8 @@ extern "C"
      * @return  0  if the operation succeeded.
      *          -1 if an error occurred.
      */
-    int pnal_get_port_statistics(
-        char const *interface_name,
-        pnal_port_stats_t *port_stats);
+    int pnal_get_port_statistics(char const *interface_name,
+                                 pnal_port_stats_t *port_stats);
 
     /**
      * Send raw Ethernet data
@@ -364,12 +358,11 @@ extern "C"
      *
      * @return  the Ethernet handle, or NULL if an error occurred.
      */
-    pnal_eth_handle_t *pnal_eth_init(
-        char const *if_name,
-        pnal_ethertype_t receive_type,
-        pnal_cfg_t const *pnal_cfg,
-        pnal_eth_callback_t *callback,
-        void *arg);
+    pnal_eth_handle_t *pnal_eth_init(char const *if_name,
+                                     pnal_ethertype_t receive_type,
+                                     pnal_cfg_t const *pnal_cfg,
+                                     pnal_eth_callback_t *callback,
+                                     void *arg);
 
     /**
      * Open an UDP socket
@@ -391,12 +384,11 @@ extern "C"
      * @param size             In:    Size of data
      * @return  The number of bytes sent, or -1 if an error occurred.
      */
-    int pnal_udp_sendto(
-        uint32_t id,
-        pnal_ipaddr_t dst_addr,
-        pnal_ipport_t dst_port,
-        uint8_t const *data,
-        int size);
+    int pnal_udp_sendto(uint32_t id,
+                        pnal_ipaddr_t dst_addr,
+                        pnal_ipport_t dst_port,
+                        uint8_t const *data,
+                        int size);
 
     /**
      * Receive UDP data.
@@ -411,12 +403,11 @@ extern "C"
      * @param size             In:    Size of buffer for received data
      * @return  The number of bytes received, or -1 if an error occurred.
      */
-    int pnal_udp_recvfrom(
-        uint32_t id,
-        pnal_ipaddr_t *src_addr,
-        pnal_ipport_t *src_port,
-        uint8_t *data,
-        int size);
+    int pnal_udp_recvfrom(uint32_t id,
+                          pnal_ipaddr_t *src_addr,
+                          pnal_ipport_t *src_port,
+                          uint8_t *data,
+                          int size);
 
     /**
      * Close an UDP socket
@@ -458,12 +449,11 @@ extern "C"
      * @return  0  if the operation succeeded.
      *          -1 if an error occurred.
      */
-    int pnal_get_ip_suite(
-        char const *interface_name,
-        pnal_ipaddr_t *p_ipaddr,
-        pnal_ipaddr_t *p_netmask,
-        pnal_ipaddr_t *p_gw,
-        char *hostname);
+    int pnal_get_ip_suite(char const *interface_name,
+                          pnal_ipaddr_t *p_ipaddr,
+                          pnal_ipaddr_t *p_netmask,
+                          pnal_ipaddr_t *p_gw,
+                          char *hostname);
 
     /**
      * Read the IP address as an integer. For IPv4.
@@ -538,13 +528,12 @@ extern "C"
      * @return  0  if the operation succeeded.
      *          -1 if an error occurred.
      */
-    int pnal_set_ip_suite(
-        char const *interface_name,
-        pnal_ipaddr_t const *p_ipaddr,
-        pnal_ipaddr_t const *p_netmask,
-        pnal_ipaddr_t const *p_gw,
-        char const *hostname,
-        bool permanent);
+    int pnal_set_ip_suite(char const *interface_name,
+                          pnal_ipaddr_t const *p_ipaddr,
+                          pnal_ipaddr_t const *p_netmask,
+                          pnal_ipaddr_t const *p_gw,
+                          char const *hostname,
+                          bool permanent);
 
 #ifdef __cplusplus
 }
