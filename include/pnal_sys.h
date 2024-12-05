@@ -13,13 +13,23 @@
  * full license information.
  ********************************************************************/
 
-#include "sampleapp_common.h"
+#ifndef PNAL_SYS_H
+#define PNAL_SYS_H
 
-void app_set_led (uint16_t id, bool led_state)
-{
-}
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-bool app_get_button (uint16_t id)
-{
-   return false;
+#include <lwip/def.h> /* For htonl etc */
+#include <lwip/pbuf.h>
+
+#define PNAL_BUF_MAX_SIZE PBUF_POOL_BUFSIZE
+
+/* Re-use lwIP pbuf for rt-kernel */
+typedef struct pbuf pnal_buf_t;
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* PNAL_SYS_H */
