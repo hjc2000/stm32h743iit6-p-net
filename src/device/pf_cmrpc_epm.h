@@ -21,6 +21,8 @@ extern "C"
 {
 #endif
 
+#include <pf_types.h>
+
 	/**
 	 * Handle rpc lookup request
 	 * @param net              InOut: The p-net stack instance
