@@ -2815,14 +2815,12 @@ static int pf_cmrpc_rm_read_ind(
 	uint16_t *p_res_pos)
 {
 	int ret = -1;
-	pf_iod_read_request_t read_request;
+	pf_iod_read_request_t read_request{};
 	pf_ar_t *p_ar = NULL; /* Assume the implicit AR */
 	uint16_t status_pos;
 	uint16_t hdr_pos;
 	uint16_t start_pos;
 	pf_api_t *p_api = NULL;
-
-	memset(&read_request, 0, sizeof(read_request));
 
 	if (p_sess->rpc_result.pnio_status.error_code != PNET_ERROR_CODE_NOERROR)
 	{
@@ -3628,9 +3626,9 @@ static int pf_cmrpc_rpc_request(
 int pf_cmrpc_rm_ccontrol_req(pnet_t *net, pf_ar_t *p_ar)
 {
 	int ret = -1;
-	pf_rpc_header_t rpc_req;
-	pf_ndr_data_t ndr_data;
-	pf_control_block_t control_io;
+	pf_rpc_header_t rpc_req{};
+	pf_ndr_data_t ndr_data{};
+	pf_control_block_t control_io{};
 	uint16_t start_pos = 0;
 	uint16_t control_pos = 0;
 	uint16_t rpc_hdr_start_pos = 0;
@@ -3638,10 +3636,6 @@ int pf_cmrpc_rm_ccontrol_req(pnet_t *net, pf_ar_t *p_ar)
 	pf_session_info_t *p_sess = NULL;
 	uint16_t max_req_len = PF_MAX_UDP_PAYLOAD_SIZE; /* Reduce to 125 to test
 													   fragmented sending */
-
-	memset(&rpc_req, 0, sizeof(rpc_req));
-	memset(&ndr_data, 0, sizeof(ndr_data));
-	memset(&control_io, 0, sizeof(control_io));
 
 	if (pf_session_allocate(net, &p_sess) != 0)
 	{
@@ -3657,10 +3651,6 @@ int pf_cmrpc_rm_ccontrol_req(pnet_t *net, pf_ar_t *p_ar)
 		p_sess->port = PF_RPC_SERVER_PORT; /* Destination port on IO-controller */
 		p_sess->from_me = true;
 		p_sess->is_big_endian = true;
-
-		memset(&rpc_req, 0, sizeof(rpc_req));
-		memset(&ndr_data, 0, sizeof(ndr_data));
-		memset(&control_io, 0, sizeof(control_io));
 
 		rpc_req.version = 4;
 		rpc_req.packet_type = PF_RPC_PT_REQUEST;

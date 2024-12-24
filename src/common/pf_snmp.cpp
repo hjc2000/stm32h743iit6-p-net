@@ -314,15 +314,15 @@ void pf_snmp_data_clear(pnet_t *net)
 	LOG_DEBUG(PF_SNMP_LOG, "SNMP(%d): Clearing SNMP data.\n", __LINE__);
 	pf_snmp_remove_data_files(p_file_directory);
 
-	memset(
-		snmp->system_contact.string,
-		'\0',
-		sizeof(snmp->system_contact.string));
+	memset(snmp->system_contact.string,
+		   '\0',
+		   sizeof(snmp->system_contact.string));
+
 	memset(snmp->system_name.string, '\0', sizeof(snmp->system_name.string));
-	memset(
-		snmp->system_location.string,
-		'\0',
-		sizeof(snmp->system_location.string));
+
+	memset(snmp->system_location.string,
+		   '\0',
+		   sizeof(snmp->system_location.string));
 }
 
 void pf_snmp_fspm_im_location_ind(pnet_t *net)
