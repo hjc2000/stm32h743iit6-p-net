@@ -24,23 +24,24 @@
 #ifndef PNAL_CONFIG_H
 #define PNAL_CONFIG_H
 
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-typedef struct pnal_thread_cfg
-{
-   uint32_t prio;
-   size_t stack_size;
-} pnal_thread_cfg_t;
+	typedef struct pnal_thread_cfg
+	{
+		uint32_t prio;
+		size_t stack_size;
+	} pnal_thread_cfg_t;
 
-typedef struct pnal_cfg
-{
-   pnal_thread_cfg_t bg_worker_thread;
-} pnal_cfg_t;
+	typedef struct pnal_cfg
+	{
+		pnal_thread_cfg_t bg_worker_thread;
+	} pnal_cfg_t;
 
 #ifdef __cplusplus
 }
