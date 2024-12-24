@@ -322,7 +322,8 @@ int app_utils_get_netif_namelist(char const *arg_str,
 		return -1;
 	}
 
-	memset(p_if_list, 0, sizeof(*p_if_list));
+	*p_if_list = app_utils_netif_namelist_t{};
+
 	c = arg_str[i++];
 	while (c != '\0')
 	{

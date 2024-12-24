@@ -39,7 +39,7 @@ extern "C"
 
 	typedef struct app_utils_netif_name
 	{
-		char name[PNET_INTERFACE_NAME_MAX_SIZE];
+		char name[PNET_INTERFACE_NAME_MAX_SIZE] = "st";
 	} app_utils_netif_name_t;
 
 	typedef struct app_utils_netif_namelist
