@@ -148,7 +148,7 @@ void pf_memory_contents_show(uint8_t const *data, int size)
  * @param state            In:   The AR state.
  * @return  A string representing the AR state.
  */
-static char const *pf_ar_state_to_string(pf_ar_state_values_t state)
+char const *pf_ar_state_to_string(pf_ar_state_values_t state)
 {
 	char const *s = "<unknown>";
 
@@ -3003,7 +3003,7 @@ static int pf_cmrpc_rm_read_ind(
  * @return  0  if operation succeeded.
  *          -1 if an error occurred.
  */
-static int pf_cmrpc_lookup_ind(
+int pf_cmrpc_lookup_ind(
 	pnet_t *net,
 	pf_session_info_t *p_sess,
 	pf_rpc_header_t const *p_rpc_req,
