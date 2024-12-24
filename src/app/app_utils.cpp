@@ -23,6 +23,7 @@
 #include "pnal.h"
 #include "sampleapp_common.h"
 #include <bsp-interface/di/console.h>
+#include <new>
 #include <pnet_api.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -209,7 +210,7 @@ char const *app_utils_event_to_string(pnet_event_values_t event)
 
 int app_utils_pnet_cfg_init_default(pnet_cfg_t *cfg)
 {
-	memset(cfg, 0, sizeof(pnet_cfg_t));
+	new (cfg) pnet_cfg_t{};
 
 	cfg->tick_us = APP_TICK_INTERVAL_US;
 
@@ -287,11 +288,6 @@ int app_utils_pnet_cfg_init_default(pnet_cfg_t *cfg)
 
 	/* Should be set by application as part of network configuration. */
 	cfg->num_physical_ports = 1;
-
-	snprintf(cfg->station_name,
-			 sizeof(cfg->station_name),
-			 "%s",
-			 APP_GSDML_DEFAULT_STATION_NAME);
 
 	/* Diagnosis mechanism */
 	/* We prefer using "Extended channel diagnosis" instead of

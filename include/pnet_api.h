@@ -1308,7 +1308,7 @@ extern "C"
 		pnet_cfg_device_id_t oem_device_id;
 
 		/** Default station name. Terminated string */
-		char station_name[PNET_STATION_NAME_MAX_SIZE];
+		char station_name[PNET_STATION_NAME_MAX_SIZE] = "rt-labs-dev";
 
 		/**
 		 * Product name

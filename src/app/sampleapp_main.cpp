@@ -34,7 +34,7 @@
 
 /********************************** Globals ***********************************/
 
-static app_data_t *sample_app = NULL;
+static app_data_t *sample_app = nullptr;
 static pnet_cfg_t pnet_cfg{};
 app_args_t app_args{};
 
@@ -48,7 +48,6 @@ int p_net_sample_app_main()
 	uint16_t number_of_ports{0};
 
 	/* Note: station name is defined by app_gsdml.h */
-	strcpy(app_args.station_name, APP_GSDML_DEFAULT_STATION_NAME);
 	app_log_set_log_level(APP_DEFAULT_LOG_LEVEL);
 
 	APP_LOG_INFO("\n** Starting P-Net sample application " PNET_VERSION " **\n");

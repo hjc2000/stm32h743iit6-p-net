@@ -18,12 +18,12 @@
 #define pf_bg_worker_init mock_pf_bg_worker_init
 #endif
 
-#include <inttypes.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "pf_block_reader.h"
 #include "pf_includes.h"
+#include <inttypes.h>
+#include <new>
+#include <stdlib.h>
+#include <string.h>
 
 #if PNET_MAX_AR < 1
 #error "PNET_MAX_AR needs to be at least 1"
@@ -37,7 +37,7 @@
 
 int pnet_init_only(pnet_t *net, pnet_cfg_t const *p_cfg)
 {
-	memset(net, 0, sizeof(*net));
+	new (net) pnet_t{};
 
 	/* Initialize configuration */
 	if (pf_fspm_init(net, p_cfg) != 0)
