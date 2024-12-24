@@ -320,64 +320,67 @@ static int pf_cmrdr_inquiry_read_all_reg_ind(
 	return ret;
 }
 
-/**
- * Handle epm lookup request
- *
- * @param net              InOut: The p-net stack instance
- * @param p_rpc_req        In:    Rpc header.
- * @param p_lookup_req     In:    Lookup request.
- * @param p_read_status    Out:   Read pnio status
- * @param res_size         In:    The size of the output buffer.
- * @param p_res            Out:   The output buffer.
- * @param p_pos            InOut: Position in the output buffer.
- * @return  0  if operation succeeded.
- *          -1 if an error occurred.
- */
-int pf_cmrpc_lookup_request(
-	pnet_t *net,
-	pf_rpc_header_t const *p_rpc_req,
-	pf_rpc_lookup_req_t const *p_lookup_req,
-	pnet_result_t *p_read_status,
-	uint16_t res_size,
-	uint8_t *p_res,
-	uint16_t *p_pos)
+extern "C"
 {
-	LOG_INFO(
-		PF_RPC_LOG,
-		"EPM(%d): Received endpoint mapper (EPM) request.\n",
-		__LINE__);
-
-	pf_rpc_lookup_rsp_t lookup_rsp;
-
-	memset(&lookup_rsp, 0, sizeof(lookup_rsp));
-	lookup_rsp.rpc_entry.tower_entry.p_cfg = &net->fspm_cfg;
-	lookup_rsp.rpc_entry.max_count = 1;
-	lookup_rsp.return_code = PF_RPC_NOT_REGISTERED;
-
-	if (p_lookup_req->max_entries > 0)
+	/**
+	 * Handle epm lookup request
+	 *
+	 * @param net              InOut: The p-net stack instance
+	 * @param p_rpc_req        In:    Rpc header.
+	 * @param p_lookup_req     In:    Lookup request.
+	 * @param p_read_status    Out:   Read pnio status
+	 * @param res_size         In:    The size of the output buffer.
+	 * @param p_res            Out:   The output buffer.
+	 * @param p_pos            InOut: Position in the output buffer.
+	 * @return  0  if operation succeeded.
+	 *          -1 if an error occurred.
+	 */
+	int pf_cmrpc_lookup_request(
+		pnet_t *net,
+		pf_rpc_header_t const *p_rpc_req,
+		pf_rpc_lookup_req_t const *p_lookup_req,
+		pnet_result_t *p_read_status,
+		uint16_t res_size,
+		uint8_t *p_res,
+		uint16_t *p_pos)
 	{
-		switch (p_lookup_req->inquiry_type)
-		{
-		case PF_RPC_INQUIRY_READ_ALL_REGISTERED_INTERFACES:
-			pf_cmrdr_inquiry_read_all_reg_ind(
-				net,
-				p_rpc_req,
-				p_lookup_req,
-				&lookup_rsp,
-				p_read_status);
-			break;
-		case PF_RPC_INQUIRY_READ_ALL_OBJECTS_FOR_ONE_INTERFACE:
-		case PF_RPC_INQUIRY_READ_ALL_INTERFACES_INCLUDING_OBJECTS:
-		case PF_RPC_INQUIRY_READ_ONE_INTERFACE_WITH_ONE_OBJECT:
-			/* Support is optional and not implemented */
-			/* FALLTHROUGH */
-		default:
-			/* Send PF_RPC_NOT_REGISTERED response */
-			break;
-		}
-	}
+		LOG_INFO(
+			PF_RPC_LOG,
+			"EPM(%d): Received endpoint mapper (EPM) request.\n",
+			__LINE__);
 
-	/* Write response buffer */
-	pf_put_lookup_response_data(net, false, &lookup_rsp, res_size, p_res, p_pos);
-	return 0;
+		pf_rpc_lookup_rsp_t lookup_rsp;
+
+		memset(&lookup_rsp, 0, sizeof(lookup_rsp));
+		lookup_rsp.rpc_entry.tower_entry.p_cfg = &net->fspm_cfg;
+		lookup_rsp.rpc_entry.max_count = 1;
+		lookup_rsp.return_code = PF_RPC_NOT_REGISTERED;
+
+		if (p_lookup_req->max_entries > 0)
+		{
+			switch (p_lookup_req->inquiry_type)
+			{
+			case PF_RPC_INQUIRY_READ_ALL_REGISTERED_INTERFACES:
+				pf_cmrdr_inquiry_read_all_reg_ind(
+					net,
+					p_rpc_req,
+					p_lookup_req,
+					&lookup_rsp,
+					p_read_status);
+				break;
+			case PF_RPC_INQUIRY_READ_ALL_OBJECTS_FOR_ONE_INTERFACE:
+			case PF_RPC_INQUIRY_READ_ALL_INTERFACES_INCLUDING_OBJECTS:
+			case PF_RPC_INQUIRY_READ_ONE_INTERFACE_WITH_ONE_OBJECT:
+				/* Support is optional and not implemented */
+				/* FALLTHROUGH */
+			default:
+				/* Send PF_RPC_NOT_REGISTERED response */
+				break;
+			}
+		}
+
+		/* Write response buffer */
+		pf_put_lookup_response_data(net, false, &lookup_rsp, res_size, p_res, p_pos);
+		return 0;
+	}
 }
