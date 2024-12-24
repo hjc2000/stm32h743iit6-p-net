@@ -3013,10 +3013,8 @@ int pf_cmrpc_lookup_ind(
 	uint16_t *p_res_pos)
 {
 	int ret = -1;
-	pf_rpc_lookup_req_t lookup_request;
+	pf_rpc_lookup_req_t lookup_request{};
 	uint16_t p_pos = req_pos;
-
-	memset(&lookup_request, 0, sizeof(lookup_request));
 
 	if (p_sess->rpc_result.pnio_status.error_code != PNET_ERROR_CODE_NOERROR)
 	{
@@ -3260,21 +3258,15 @@ static int pf_cmrpc_rm_write_ind(
 	uint16_t *p_res_pos)
 {
 	int ret = -1;
-	pf_iod_write_request_t write_request;
-	pf_iod_write_result_t write_result;
-	pf_iod_write_request_t write_request_multi;
-	pf_iod_write_result_t write_result_multi;
-	pnet_result_t write_stat_multi;
-	uint16_t req_start_pos;
-	uint16_t res_hdr_pos;
-	uint16_t res_start_pos;
-	uint16_t res_status_pos;
-
-	memset(&write_request, 0, sizeof(write_request));
-	memset(&write_result, 0, sizeof(write_result));
-	memset(&write_request_multi, 0, sizeof(write_request_multi));
-	memset(&write_result_multi, 0, sizeof(write_result_multi));
-	memset(&write_stat_multi, 0, sizeof(write_stat_multi));
+	pf_iod_write_request_t write_request{};
+	pf_iod_write_result_t write_result{};
+	pf_iod_write_request_t write_request_multi{};
+	pf_iod_write_result_t write_result_multi{};
+	pnet_result_t write_stat_multi{};
+	uint16_t req_start_pos{};
+	uint16_t res_hdr_pos{};
+	uint16_t res_start_pos{};
+	uint16_t res_status_pos{};
 
 	/*
 	 * Read the first request block.
