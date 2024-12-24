@@ -66,11 +66,11 @@
  * 1) Send UDP frames.
  */
 
-#include <string.h>
-
 #include "pf_block_reader.h"
 #include "pf_block_writer.h"
 #include "pf_includes.h"
+#include <new>
+#include <string.h>
 
 #define PF_FRAME_ID_ALARM_HIGH 0xfc01
 #define PF_FRAME_ID_ALARM_LOW 0xfe01
@@ -1428,7 +1428,7 @@ static int pf_alarm_apms_apms_a_data_req(
 	}
 	else
 	{
-		memset(&fixed, 0, sizeof(fixed));
+		fixed = pf_alarm_fixed_t{};
 		fixed.src_ref = p_apmx->src_ref;
 		fixed.dst_ref = p_apmx->dst_ref;
 		fixed.pdu_type.type = PF_RTA_PDU_TYPE_DATA;
@@ -1508,7 +1508,7 @@ static int pf_alarm_apmx_close(pnet_t *net, pf_ar_t *p_ar, uint8_t err_code)
 		pnio_status.error_code_1 = PNET_ERROR_CODE_1_RTA_ERR_CLS_PROTOCOL;
 		pnio_status.error_code_2 = err_code;
 
-		memset(&fixed, 0, sizeof(fixed));
+		fixed = pf_alarm_fixed_t{};
 		fixed.src_ref = p_ar->apmx[0].src_ref;
 		fixed.dst_ref = p_ar->apmx[0].dst_ref;
 		fixed.pdu_type.type = PF_RTA_PDU_TYPE_ERR;
@@ -1598,9 +1598,7 @@ static int pf_alarm_apmx_close(pnet_t *net, pf_ar_t *p_ar, uint8_t err_code)
 static int pf_alarm_apmr_send_ack(pnet_t *net, pf_apmx_t *p_apmx)
 {
 	int ret = -1;
-	pf_alarm_fixed_t fixed;
-
-	memset(&fixed, 0, sizeof(fixed));
+	pf_alarm_fixed_t fixed{};
 	fixed.src_ref = p_apmx->src_ref;
 	fixed.dst_ref = p_apmx->dst_ref;
 	fixed.pdu_type.type = PF_RTA_PDU_TYPE_ACK;
@@ -1640,9 +1638,7 @@ static int pf_alarm_apmr_send_ack(pnet_t *net, pf_apmx_t *p_apmx)
 static int pf_alarm_apmr_send_nack(pnet_t *net, pf_apmx_t *p_apmx)
 {
 	int ret = -1;
-	pf_alarm_fixed_t fixed;
-
-	memset(&fixed, 0, sizeof(fixed));
+	pf_alarm_fixed_t fixed{};
 	fixed.src_ref = p_apmx->src_ref;
 	fixed.dst_ref = p_apmx->dst_ref;
 	fixed.pdu_type.type = PF_RTA_PDU_TYPE_NACK;
@@ -1909,7 +1905,7 @@ static int pf_alarm_get_diag_summary(
 
 	if (pf_cmdev_get_device(net, &p_dev) == 0)
 	{
-		memset(p_alarm_spec, 0, sizeof(*p_alarm_spec));
+		new (p_alarm_spec) pnet_alarm_spec_t{};
 		*p_maint_status = 0;
 
 		/* Consider only alarms on this sub-slot. */

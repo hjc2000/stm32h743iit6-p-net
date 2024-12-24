@@ -42,10 +42,10 @@ app_args_t app_args{};
 
 int p_net_sample_app_main()
 {
-	int ret{0};
+	int ret{};
 	app_utils_netif_namelist_t netif_name_list{};
 	pnet_if_cfg_t netif_cfg{};
-	uint16_t number_of_ports{0};
+	uint16_t number_of_ports{};
 
 	/* Note: station name is defined by app_gsdml.h */
 	app_log_set_log_level(APP_DEFAULT_LOG_LEVEL);

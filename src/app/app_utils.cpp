@@ -620,7 +620,7 @@ int app_utils_pull_submodule(app_api_t *p_api,
 		return -1;
 	}
 
-	memset(p_subslot, 0, sizeof(app_subslot_t));
+	new (p_subslot) app_subslot_t{};
 	p_subslot->used = false;
 
 	return 0;
