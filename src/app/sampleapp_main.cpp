@@ -26,7 +26,6 @@
 
 #include <string.h>
 
-#define APP_DEFAULT_ETHERNET_INTERFACE "st"
 #define APP_DEFAULT_FILE_DIRECTORY ""
 #define APP_LOG_LEVEL APP_LOG_LEVEL_ERROR
 
@@ -43,12 +42,10 @@ app_args_t app_args{};
 
 int p_net_sample_app_main()
 {
-	int ret;
-	app_utils_netif_namelist_t netif_name_list;
+	int ret{0};
+	app_utils_netif_namelist_t netif_name_list{};
 	pnet_if_cfg_t netif_cfg{};
-	uint16_t number_of_ports;
-
-	strcpy(app_args.eth_interfaces, APP_DEFAULT_ETHERNET_INTERFACE);
+	uint16_t number_of_ports{0};
 
 	/* Note: station name is defined by app_gsdml.h */
 	strcpy(app_args.station_name, APP_GSDML_DEFAULT_STATION_NAME);
